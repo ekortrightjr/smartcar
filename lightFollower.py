@@ -12,6 +12,31 @@ buzzer = Buzzer()
 
 leds = [0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x01, 0x02]
 
+def move(mode):
+    if (mode == "fwd"):
+        print('moveForward')
+        motor.setMotorModel(750,750,750,750)
+        signal("off")
+        brakeLights("off")
+    elif (mode == "fwd-left"):
+        print('moveLeft')
+        motor.setMotorModel(-500,-500,1800,1800)
+        signal("left")
+        brakeLights("off")
+    elif (mode == "fwd-right"):
+        print('moveRight')
+        motor.setMotorModel(1800,1800,-500,-500)
+        signal("right")
+        brakeLights("off")
+    elif (mode == "stop"):
+        print('stop')
+        motor.setMotorModel(0,0,0,0)
+        brakeLights("on")
+    else:
+        print('stop')
+        motor.setMotorModel(0,0,0,0)
+        brakeLights("on")
+        
 def beep(mode):
     if (mode == "on"):
         buzzer.run("1")
@@ -91,23 +116,23 @@ try:
         distance = ultrasonic.get_distance()
         print ("distance: " + str(distance) + "CM")
         if (distance < 15):
-            stop()
+            move("stop")
             beep("on")
         elif (Left_IDR > Right_IDR + 0.3):
             print ("turn left")
-            moveLeft()
+            move("fwd-left")
             beep("off")
         elif (Right_IDR > Left_IDR + 0.3):
             print("turn right")
-            moveRight()
+            move("fwd-right")
             beep("off")
         else:
             print ("move forward")
-            moveForward()
+            move("fwd")
             beep("off")
 except KeyboardInterrupt:
     print ("End of Program")
-    stop()
+    move("stop")
     time.sleep(3)
     brakeLights("off")
     headLights("off")

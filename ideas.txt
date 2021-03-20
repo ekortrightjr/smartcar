@@ -1,0 +1,3 @@
+when the car crashes, lights and buzzer signal sos
+360 degree sensors
+3d world modeling
