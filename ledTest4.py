@@ -3,8 +3,14 @@ import sys
 from Led import *
 
 def clearAllLEDs():
+    led.ledIndex(255, 0, 0, 0)
+
+def clearAllLEDs_bak():    
+    s = 0
     for i in range (0, 8):
         led.ledIndex(leds[i], 0, 0, 0)
+        s += leds[i]
+    print(s)
 
 led = Led()
             
